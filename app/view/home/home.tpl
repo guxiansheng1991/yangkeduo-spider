@@ -23,6 +23,61 @@
   </nav>
 
   <!-- 内容区 -->
+  <!-- 搜索条 -->
+  <form class="form-horizontal">
+    <div class="form-group">
+      <label for="inputEmail3" class="col-sm-1 control-label">目标url</label>
+      <div class="col-sm-10">
+        <input type="email" class="form-control" id="inputEmail3" placeholder="目标url">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputPassword3" class="col-sm-1 control-label">限制条数</label>
+      <div class="col-sm-1">
+        <select class="form-control">
+          <option selected>10</option>
+          <option>20</option>
+          <option>30</option>
+          <option>40</option>
+          <option>50</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-1 col-sm-10">
+        <button type="submit" class="btn btn-default">开始抓取</button>
+      </div>
+    </div>
+  </form>
+
+  <!-- 分割线 -->
+  <hr>
+
+  {% if code !== 200 %}
+    <div class="alert alert-danger" role="alert">{{ msg }}</div>
+  {% endif %}
+
+  <!-- 数据表格 -->
+  <table class="table table-bordered">
+    <tr>
+      <th class="col-sm-1">编码</th>
+      <th class="col-sm-1">产品主图</th>
+      <th class="col-sm-1">产品ID</th>
+      <th class="col-sm-3">产品URL</th>
+      <th class="col-sm-2">产品名称</th>
+      <th class="col-sm-2">产品SKU价格区间</th>
+      <th class="col-sm-1">销量</th>
+      <th class="col-sm-1">评价总数</th>
+    </tr>
+    <!--<tr>-->
+      <!--<td></td>-->
+      <!--<td></td>-->
+      <!--<td></td>-->
+      <!--<td></td>-->
+      <!--<td></td>-->
+      <!--<td></td>-->
+    <!--</tr>-->
+  </table>
 
   </body>
 </html>
