@@ -15,7 +15,7 @@
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">首页</a></li>
+          <li class="active"><a href="#">搜索列表</a></li>
           <!--<li><a href="#">Link</a></li>-->
         </ul>
       </div>
@@ -26,17 +26,26 @@
   <!-- 搜索条 -->
   <form class="form-horizontal">
     <div class="form-group">
-      <label for="inputEmail3" class="col-sm-1 control-label">目标url</label>
-      <div class="col-sm-10">
-        <input type="email" class="form-control" id="inputEmail3" placeholder="目标url">
+      <label for="inputHeader3" class="col-sm-1 control-label">headers</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="headers" id="inputHeader3" onblur="setHeaders(event)" rows="10"
+                  placeholder="请直接复制search接口的verifyauthtoken,cookie,accesstoken到本输入框"></textarea>
       </div>
+      <button type="button" class="btn" onclick="clearLocalStorage('headers', 'inputHeader3')">清除headers缓存</button>
     </div>
     <div class="form-group">
-      <label for="inputPassword3" class="col-sm-1 control-label">限制条数</label>
+      <label for="inputQ" class="col-sm-1 control-label">关键词</label>
+      <div class="col-sm-8">
+        <input class="form-control" name="q" id="inputQ" onblur="setQ(event)" placeholder="搜索关键词" />
+      </div>
+      <button type="button" class="btn" onclick="clearLocalStorage('q', 'inputQ')">清除q缓存</button>
+    </div>
+    <div class="form-group">
+      <label for="inputPassword3" class="col-sm-1 control-label">爬取条数</label>
       <div class="col-sm-1">
-        <select class="form-control">
-          <option selected>10</option>
-          <option>20</option>
+        <select id="inputPassword3" class="form-control" name="size">
+          <option>10</option>
+          <option selected>20</option>
           <option>30</option>
           <option>40</option>
           <option>50</option>
@@ -44,8 +53,22 @@
       </div>
     </div>
     <div class="form-group">
+      <label class="col-sm-1 control-label">排序规则</label>
+      <div class="col-sm-5">
+        <label class="radio-inline">
+          <input type="radio" name="sort" checked="true" id="inlineRadio1" value="_sales"> 销量(_sales)
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="sort" id="inlineRadio2" value="default"> 综合(default)
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="sort" id="inlineRadio3" value="_credit"> 评分(_credit)
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
       <div class="col-sm-offset-1 col-sm-10">
-        <button type="submit" class="btn btn-default">开始抓取</button>
+        <button type="submit" class="btn btn-primary">开始抓取</button>
       </div>
     </div>
   </form>
@@ -53,6 +76,12 @@
   <!-- 分割线 -->
   <hr>
 
+  <!-- 请求参数 -->
+  {% if code === 200 %}
+  <div class="alert alert-success" role="alert">{{ reqParams }}</div>
+  {% endif %}
+
+  <!-- 警告信息 -->
   {% if code !== 200 %}
     <div class="alert alert-danger" role="alert">{{ msg }}</div>
   {% endif %}
@@ -60,24 +89,54 @@
   <!-- 数据表格 -->
   <table class="table table-bordered">
     <tr>
-      <th class="col-sm-1">编码</th>
       <th class="col-sm-1">产品主图</th>
       <th class="col-sm-1">产品ID</th>
-      <th class="col-sm-3">产品URL</th>
+      <th class="col-sm-1">产品URL</th>
       <th class="col-sm-2">产品名称</th>
       <th class="col-sm-2">产品SKU价格区间</th>
       <th class="col-sm-1">销量</th>
       <th class="col-sm-1">评价总数</th>
     </tr>
-    <!--<tr>-->
-      <!--<td></td>-->
-      <!--<td></td>-->
-      <!--<td></td>-->
-      <!--<td></td>-->
-      <!--<td></td>-->
-      <!--<td></td>-->
-    <!--</tr>-->
+    {% for item in list %}
+    <tr>
+      <td><img style="width: 100px;" src="{{item.hd_thumb_url}}"></td>
+      <td>{{item.goods_id}}</td>
+      <td>{{item.link_url}}</td>
+      <td>{{item.goods_name}}</td>
+      <td>{{item.sku_price}}</td>
+      <td>{{item.sales}}</td>
+      <td>{{item.comment_number}}</td>
+    </tr>
+    {% endfor %}
   </table>
 
   </body>
+  <script>
+    window.addEventListener('load', function (e) {
+      // 加载headers
+      let headersStr = localStorage.getItem('headers');
+      let q = localStorage.getItem('q');
+      if (headersStr) {
+        document.querySelector('#inputHeader3').value = headersStr;
+      }
+      if (q) {
+        document.querySelector('#inputQ').value = q;
+      }
+    });
+
+    function clearLocalStorage(key, domId) {
+      localStorage.setItem(key, '');
+      document.getElementById(domId).value = '';
+    }
+
+    // 设置headersStr
+    function setHeaders(e) {
+      localStorage.setItem('headers', document.querySelector('#inputHeader3').value);
+    }
+
+    // 设置inputQ
+    function setQ(e) {
+      localStorage.setItem('q', document.querySelector('#inputQ').value);
+    }
+  </script>
 </html>
