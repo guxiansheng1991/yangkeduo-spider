@@ -44,8 +44,8 @@
       <label for="inputPassword3" class="col-sm-1 control-label">爬取条数</label>
       <div class="col-sm-1">
         <select id="inputPassword3" class="form-control" name="size">
-          <option>10</option>
-          <option selected>20</option>
+          <option selected>10</option>
+          <option>20</option>
           <option>30</option>
           <option>40</option>
           <option>50</option>

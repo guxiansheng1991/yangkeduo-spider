@@ -39,9 +39,10 @@ class Util {
         method: 'get',
         headers: headersObj
       }).then(response => {
-        console.log('------------response--start--------------------', response);
-        console.log('------------response--end--------------------');
+        // console.log('------------response--start--------------------', response);
+        // console.log('------------response--end--------------------');
         if (response.status === 200 && !response.data.error_code) {
+          console.log('data.items[0],', response.data.items[0]);
           resolve(response.data);
         } else {
           reject(response.data);
@@ -82,6 +83,7 @@ class Util {
         comment_number: 0
       });
     });
+    // console.log('产品list,', resList);
     return resList.reverse();
   }
 }
