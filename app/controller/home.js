@@ -48,6 +48,11 @@ class HomeController extends Controller {
       }
     }
   }
+
+  // 拼多多静态页面
+  async pinduoduo() {
+    await this.ctx.render('pinduoduo/pinduoduo.tpl');
+  }
 }
 
 module.exports = HomeController;
