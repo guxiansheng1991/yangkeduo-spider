@@ -15,13 +15,49 @@ class SaveImgController extends Controller {
     async index() {
         // 参数
         const { ctx } = this;
-        const query = ctx;
-        console.log(query);
+        const { inputPath, inputUrl, inputUrlHead } = ctx.request.query;
 
-        // this.creatDirMethod('D://test1/test2/test3');
-        // this.writeImg('https://cbu01.alicdn.com/img/ibank/2020/932/159/14323951239_1707140344.jpg', 'D://test1/test2/test3', '1.jpg')
+        const res = {
+            detailImgList: [],
+            headImgList: [],
+            code: 0,
+            msg: ''
+        };
 
-        ctx.body = [1,2,3];
+        // 详情页图片
+        const detailImgPath = `${inputPath}/1688详情图`;
+        this.creatDirMethod(detailImgPath);
+        const detailImgUrlArray = inputUrl.split(',');
+        let i = 0;
+        const detailInterval = setInterval(async () => {
+            if (i < detailImgUrlArray.length) {
+                const ele = detailImgUrlArray[i];
+                let saveImg = await this.writeImg(ele, detailImgPath, `${i}.jpg`);
+                res.detailImgList.push(saveImg);
+                i++;
+            } else {
+                clearInterval(detailInterval);
+            }
+        }, Math.random() * 2000 + 1000);
+
+        // 头页图片
+        const headImgPath = `${inputPath}/1688头图`;
+        this.creatDirMethod(headImgPath);
+        const headImgUrlArray = inputUrlHead.split(',');
+        let j = 0;
+        const headInterval = setInterval(async () => {
+            if (j < headImgUrlArray.length) {
+                const ele = headImgUrlArray[j];
+                let saveImg = await this.writeImg(ele, headImgPath, `${j}.jpg`);
+                res.headImgList.push(saveImg);
+                j++;
+            } else {
+                clearInterval(headInterval);
+            }
+        }, Math.random() * 2000 + 1000);
+
+        res.code = 200;
+        ctx.body = res;
     }
 
     // 创建文件夹
@@ -41,7 +77,6 @@ class SaveImgController extends Controller {
     // 将文件写入文件系统
     writeImg(imgUrl, myDirPath, filename) {
         return new Promise((resolve, reject) => {
-            let filename = `test.png`;
             const writeStream = fs.createWriteStream(`${myDirPath}/${filename}`);
             const readStream = request(imgUrl);
             readStream.pipe(writeStream);

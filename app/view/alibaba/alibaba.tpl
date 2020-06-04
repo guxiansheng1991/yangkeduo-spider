@@ -25,15 +25,40 @@
   <!-- 内容区 -->
   <!-- 搜索条 -->
   <form class="form-horizontal">
+	  <div class="form-group">
+		  <label for="inputPath" class="col-sm-2 control-label">文件夹路径</label>
+		  <div class="col-sm-8">
+			  <input class="form-control" type="text" id="inputPath">
+		  </div>
+	  </div>
+	  <div class="form-group">
+		  <label for="inputPath" class="col-sm-2 control-label">详情图代码</label>
+		  <div class="col-sm-8">
+			  <p>var arr = [];var imgs = document.querySelector('#desc-lazyload-container').getElementsByTagName('img');for(var i = 0;i < imgs.length; i++) {var item = imgs[i];if (item.tagName === 'IMG') {arr.push(item.getAttribute('src'));}}console.log(arr.join(','));</p>
+		  </div>
+	  </div>
     <div class="form-group">
-      <label for="inputUrl" class="col-sm-1 control-label">1688链接</label>
+      <label for="inputUrl" class="col-sm-2 control-label">1688链接</label>
       <div class="col-sm-8">
-        <textarea class="form-control" name="headers" id="inputUrl" onblur="setHeaders(event)" rows="20"
-                  placeholder="图片链接, 每行一个链接"></textarea>
+        <textarea class="form-control" name="headers" id="inputUrl" rows="20"
+                  placeholder="详情图片链接"></textarea>
       </div>
     </div>
 	  <div class="form-group">
-		  <button type="button" class="col-sm-offset-1 btn btn-primary" onclick="save()">保存图片</button>
+		  <label for="inputPath" class="col-sm-2 control-label">头图代码</label>
+		  <div class="col-sm-8">
+			  <p>var arr1 = [];var imgs1 = document.querySelector('.tab-content-container').children[0].children;for (var j = 0; j < imgs1.length; j++) {const ele = imgs1[j];let imgObj = ele.getAttribute('data-imgs');if (imgObj) {imgObj = JSON.parse(imgObj);arr1.push(imgObj.original);}}console.log(arr1.join(','));</p>
+		  </div>
+	  </div>
+	  <div class="form-group">
+		  <label for="inputUrl" class="col-sm-2 control-label">1688链接</label>
+		  <div class="col-sm-8">
+        <textarea class="form-control" name="headers" id="inputUrlHead" rows="20"
+                  placeholder="头图片链接"></textarea>
+		  </div>
+	  </div>
+	  <div class="form-group">
+		  <button type="button" class="col-sm-offset-2 btn btn-primary" onclick="save()">保存全部图片</button>
 	  </div>
   </form>
 
@@ -58,18 +83,22 @@
 		function save() {
 				const inputPath = $('#inputPath').val();
         const inputUrl = $('#inputUrl').val();
+        const inputUrlHead = $('#inputUrlHead').val();
         $.ajax({
-		        method: 'post',
+		        method: 'get',
 		        url: '/saveImg',
 		        data: {
 		            inputPath: inputPath,
-				        inputUrl: inputUrl
+				        inputUrl: inputUrl,
+                inputUrlHead: inputUrlHead
 		        },
 		        success: function (data) {
 				        console.log(data);
+				        alert('请查看文件夹中的图片');
             },
 		        error: function (req, err) {
 				        console.error(req, err);
+                alert('请查看文件夹中的图片');
             }
         });
     }
