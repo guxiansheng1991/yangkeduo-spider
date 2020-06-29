@@ -34,7 +34,8 @@
 	  <div class="form-group">
 		  <label for="inputPath" class="col-sm-2 control-label">详情图代码</label>
 		  <div class="col-sm-8">
-			  <p>var arr = [];var imgs = document.querySelector('#desc-lazyload-container').getElementsByTagName('img');for(var i = 0;i < imgs.length; i++) {var item = imgs[i];if (item.tagName === 'IMG') {arr.push(item.getAttribute('src'));}}console.log(arr.join(','));</p>
+        <p>var arr = [];var imgs = document.querySelector('#desc-lazyload-container').getElementsByTagName('img');for(var i = 0;i < imgs.length; i++) {var item = imgs[i];if (item.tagName === 'IMG') {arr.push(item.getAttribute('src'));}}console.log(arr.join(','));</p>
+        <button onclick="copyDetail()">复制代码</button>
 		  </div>
 	  </div>
     <div class="form-group">
@@ -48,7 +49,8 @@
 		  <label for="inputPath" class="col-sm-2 control-label">头图代码</label>
 		  <div class="col-sm-8">
 			  <p>var arr1 = [];var imgs1 = document.querySelector('.tab-content-container').children[0].children;for (var j = 0; j < imgs1.length; j++) {const ele = imgs1[j];let imgObj = ele.getAttribute('data-imgs');if (imgObj) {imgObj = JSON.parse(imgObj);arr1.push(imgObj.original);}}console.log(arr1.join(','));</p>
-		  </div>
+        <button onclick="copyHead()">复制代码</button>
+      </div>
 	  </div>
 	  <div class="form-group">
 		  <label for="inputUrl" class="col-sm-2 control-label">1688链接</label>
@@ -79,6 +81,7 @@
   <!--</table>-->
 
   </body>
+  <script src="/public/common.js"></script>
   <script>
 		function save() {
 				const inputPath = $('#inputPath').val();
@@ -101,6 +104,17 @@
                 alert('请查看文件夹中的图片');
             }
         });
+    }
+
+    // 复制获取详情页图片代码
+    function copyDetail() {
+      const str = `var arr = [];var imgs = document.querySelector('#desc-lazyload-container').getElementsByTagName('img');for(var i = 0;i < imgs.length; i++) {var item = imgs[i];if (item.tagName === 'IMG') {arr.push(item.getAttribute('src'));}}console.log(arr.join(','));`;
+      copy(str);
+    }
+    // 复制获取详情页图片代码
+    function copyHead() {
+      const str = `var arr1 = [];var imgs1 = document.querySelector('.tab-content-container').children[0].children;for (var j = 0; j < imgs1.length; j++) {const ele = imgs1[j];let imgObj = ele.getAttribute('data-imgs');if (imgObj) {imgObj = JSON.parse(imgObj);arr1.push(imgObj.original);}}console.log(arr1.join(','));`;
+      copy(str);
     }
   </script>
 </html>
