@@ -24,6 +24,15 @@ class SaveImgController extends Controller {
             msg: ''
         };
 
+        // 创建sku, 头图, 详情图, 白底图文件夹
+        const skuImgPath0 = `${inputPath}/sku`;
+        const headImgPath0 = `${inputPath}/头图`;
+        const detailImgPath0 = `${inputPath}/详情图`;
+        const whiteImgPath0 = `${inputPath}/白底图`;
+        this.creatDirMethod(skuImgPath0);
+        this.creatDirMethod(headImgPath0);
+        this.creatDirMethod(detailImgPath0);
+        this.creatDirMethod(whiteImgPath0);
         // 详情页图片
         const detailImgPath = `${inputPath}/1688详情图`;
         this.creatDirMethod(detailImgPath);
