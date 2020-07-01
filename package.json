@@ -12,7 +12,8 @@
     "egg-scripts": "^2.11.0",
     "egg-view-nunjucks": "^2.2.0",
     "puppeteer": "^3.3.0",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "superagent": "^5.3.1"
   },
   "devDependencies": {
     "autod": "^3.0.1",

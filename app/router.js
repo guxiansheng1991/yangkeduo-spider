@@ -9,4 +9,6 @@ module.exports = app => {
   router.get('/alibaba', controller.saveImg.alibaba);
   router.get('/pinduoduo', controller.home.pinduoduo);
   router.get('/saveImg', controller.saveImg.index);
+  router.get('/material', controller.material.index);
+  router.get('/material/hupu', controller.material.hupu);
 };
